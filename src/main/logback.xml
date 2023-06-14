@@ -2,11 +2,33 @@
 <configuration>
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %mdc %kvp %msg%n</pattern>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} | %mdc %kvp %msg %ex %n</pattern>
         </encoder>
+    </appender>
+
+    <appender name="LOKI" class="com.github.loki4j.logback.Loki4jAppender">
+        <http>
+            <auth>
+                <username>admin</username>
+                <password>admin</password>
+            </auth>
+            <url>https://logs-prod-006.grafana.net/loki/api/v1/push</url>
+        </http>
+        <format>
+            <label>
+                <pattern>app=poc</pattern>
+            </label>
+            <message>
+                <pattern>host=${HOSTNAME} [%thread] %-5level %logger{36} | %mdc %kvp %msg %ex %n</pattern>
+            </message>
+        </format>
+        <verbose>true</verbose>
+        <batchMaxItems>10</batchMaxItems>
+        <batchTimeoutMs>5</batchTimeoutMs>
     </appender>
 
     <root level="debug">
         <appender-ref ref="STDOUT" />
+        <appender-ref ref="LOKI" />
     </root>
 </configuration>

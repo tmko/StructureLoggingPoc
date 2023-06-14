@@ -10,3 +10,9 @@ java \
 java \
 -Dlogback.configurationFile=../src/main/logback.xml \
 -jar StructureLoggingPoc-1.0-SNAPSHOT-jar-with-dependencies.jar 
+
+# bam72811@zbock.com
+# bam72811.grafana.net
+# AWS US East
+# bam72811
+
